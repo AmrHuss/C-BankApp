@@ -1,106 +1,95 @@
-// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 
-
-
 using namespace std;
 
-void RegisterUser(string username, string password)
-{
-
-    std::fstream file;
-    
-
-    file.open("k.txt", std::ios::out | std::ios::app);
-
+void RegisterUser(string username, string password) {
+    ofstream file("k.txt", ios::out | ios::app);
+    if (file.is_open()) {
         file << username + "," + password << endl;
-
         file.close();
-
+        cout << "Registration successful!\n";
+    }
+    else {
+        cout << "Error: Unable to open file for registration.\n";
+    }
 }
 
-bool checkCredentials(const std::string& username, const std::string& password) {
-    std::ifstream file("k.txt");
-    std::string line;
+bool checkCredentials(const string& username, const string& password) {
+    ifstream file("k.txt");
+    if (!file.is_open()) {
+        cout << "Error: Unable to open file for checking credentials.\n";
+        return false;
+    }
 
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string storedUsername, storedPassword;
-        if (std::getline(iss, storedUsername, ',') && getline(iss, storedPassword, ',')) {
+    string line;
+    while (getline(file, line)) {
+        istringstream iss(line);
+        string storedUsername, storedPassword;
+        if (getline(iss, storedUsername, ',') && getline(iss, storedPassword, ',')) {
             if (storedUsername == username && storedPassword == password) {
-                return true; 
+                file.close();
+                return true;
             }
         }
     }
-
-    return false; 
+    file.close();
+    return false;
 }
 
-int main()
-{
-    int choice=0;
-    int num = 0;
-    string username = "";
-    string password = "";
-    
-        std::cout << "Login successful!\n";
-        break;
+int main() {
+    int choice;
+    string username, password;
 
+    while (true) {
+        cout << "Hello! Welcome to your banking app. Please select an option:\n";
+        cout << "1. Sign in\n";
+        cout << "2. Sign up\n";
+        cout << "3. Exit\n";
 
-        std::cout << "Hello Welcome to your banking app please press a number to continue \n";
-        std::cout << "1. Sign in \n";
-        std::cout << "2. Sign up \n";
-        std::cout << "3. Exit\n";
         cin >> choice;
 
-        switch (choice)
-        {
-            
+        switch (choice) {
         case 1:
-                cout << "\n Please enter your name:";
-                cin >> username;
+            cout << "Enter your username: ";
+            cin >> username;
 
-
-        }
-
-                cout << "\n Please enter your Password:";
-                cin >> password;
-        while (password == ""|| password.length() < 6 )
-        {
-
-            cout << "\n Please enter your password make sure it has more than 6 charcters:";
+            cout << "Enter your password: ";
             cin >> password;
 
+            if (checkCredentials(username, password)) {
+                cout << "Login successful!\n";
+            }
+            else {
+                cout << "Invalid username or password.\n";
+            }
+            break;
+
+        case 2:
+            cout << "Enter a new username: ";
+            cin >> username;
+
+            cout << "Enter a new password (must be at least 6 characters long): ";
+            cin >> password;
+
+            if (password.length() < 6) {
+                cout << "Password must be at least 6 characters long. Registration failed.\n";
+            }
+            else {
+                RegisterUser(username, password);
+            }
+            break;
+
+        case 3:
+            cout << "Exiting the app. Goodbye!\n";
+            return 0;
+
+        default:
+            cout << "Invalid choice. Please select a valid option.\n";
         }
+    }
 
-        RegisterUser(username, password);
-        break;
-
-
-                    
-;           
-            case 2:
-                cout << "\n Please enter your name:";
-                cin >> username;
-                cout << "\n Please enter a Password:";
-                cin >> password;
-            case 3:
-                cout << "\n You have succesfully quit the app ";
-                break;
-
-
-        }
+    return 0;
 }
-
-        
-
-
-
-  
-} 
-
