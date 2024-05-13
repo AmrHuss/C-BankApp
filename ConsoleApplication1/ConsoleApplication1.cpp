@@ -43,54 +43,33 @@ bool checkCredentials(const std::string& username, const std::string& password) 
 
 int main()
 {
-    int choice = 0;
+    int choice=0;
     int num = 0;
- 
-    cout << "Hello Welcome to your banking app please press a number to continue \n";
-    cout << "1. Sign in \n";
-    cout << "2. Sign up \n";
-    cout << "3. Exit\n";
-    cin >> choice;
-
-  string username, password; 
-
-    switch (choice) {
-    case 1:
-        std::cout << "Enter username: ";
-        std::cin >> username;
-
-        std::cout << "Enter password: ";
-        std::cin >> password;
-
-        while (!checkCredentials(username, password)) {
-            std::cout << "\nInvalid username or password. Please try again.\n";
-
-            std::cout << "\nPlease enter your name:";
-            std::cin >> username;
-
-            std::cout << "\nPlease enter your Password:";
-            std::cin >> password;
-        }
-
+    string username = "";
+    string password = "";
+    
         std::cout << "Login successful!\n";
         break;
 
 
+        std::cout << "Hello Welcome to your banking app please press a number to continue \n";
+        std::cout << "1. Sign in \n";
+        std::cout << "2. Sign up \n";
+        std::cout << "3. Exit\n";
+        cin >> choice;
 
-    case 2:
-        cout << "\n Please enter your name:";
-        cin >> username;
-        while (username == "")
+        switch (choice)
         {
-
-            cout << "\n Please enter your name:";
-            cin >> username;
+            
+        case 1:
+                cout << "\n Please enter your name:";
+                cin >> username;
 
 
         }
 
-        cout << "\n Please enter your Password:";
-        cin >> password;
+                cout << "\n Please enter your Password:";
+                cin >> password;
         while (password == ""|| password.length() < 6 )
         {
 
@@ -103,25 +82,25 @@ int main()
         break;
 
 
+                    
+;           
+            case 2:
+                cout << "\n Please enter your name:";
+                cin >> username;
+                cout << "\n Please enter a Password:";
+                cin >> password;
+            case 3:
+                cout << "\n You have succesfully quit the app ";
+                break;
 
-    case 3:
-        cout << "\n You have succesfully quit the app ";
-        break;
 
-
-    }
+        }
 }
 
-
-
-
- 
-
-
-       
+        
 
 
 
   
-
+} 
 
