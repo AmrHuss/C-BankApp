@@ -16,6 +16,45 @@ void RegisterUser(string username, string password) {
         cout << "Error: Unable to open file for registration.\n";
     }
 }
+void Logged(string username) {
+    int choice;
+    float bal = 0; 
+    float deposit;
+    float withdraw;
+
+    cout << "Hello " << username << ", Welcome to your banking app. Please select an option: \n";
+    cout << "1. Check balance\n";
+    cout << "2. Withdraw \n";
+    cout << "3. Exit\n";
+
+    cin >> choice;
+
+    switch (choice) {
+    case 1:
+        cout << "Your balance is: " << bal << endl;
+        Logged(username);
+        break;
+    case 2:
+        cout << "Enter amount to withdraw: ";
+        cin >> withdraw;
+        if (withdraw <= bal) {
+            bal -= withdraw;
+            cout << "Withdrawal successful. Your new balance is: " << bal << endl;
+            Logged(username);
+        }
+        else {
+            cout << "Insufficient funds.\n";
+            Logged(username);
+        }
+        break;
+    case 3:
+        cout << "Exiting to main menu.\n";
+        return;
+    default:
+        cout << "Invalid choice. Please select a valid option.\n";
+    }
+}
+
 
 bool checkCredentials(const string& username, const string& password) {
     ifstream file("k.txt");
@@ -61,6 +100,8 @@ int main() {
 
             if (checkCredentials(username, password)) {
                 cout << "Login successful!\n";
+                Logged(username);
+         
             }
             else {
                 cout << "Invalid username or password.\n";
@@ -92,4 +133,6 @@ int main() {
     }
 
     return 0;
+
+
 }
